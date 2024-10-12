@@ -19,18 +19,22 @@ public class securityConfig {
     private String password;
     @Value("$.secure.roles")
     private String role;
+
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-    http.csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests()
-            .anyRequest().authenticated()
-            .and()
-            .httpBasic();
-    return http.build();
-    };
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic();
+        return http.build();
+    }
+
+    ;
+
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
-        UserDetails principleUser= User.withDefaultPasswordEncoder()
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+        UserDetails principleUser = User.withDefaultPasswordEncoder()
                 .username(userName)
                 .password(password)
                 .roles(role).build();
@@ -38,3 +42,4 @@ public class securityConfig {
         return new InMemoryUserDetailsManager(principleUser);
     }
 }
+
